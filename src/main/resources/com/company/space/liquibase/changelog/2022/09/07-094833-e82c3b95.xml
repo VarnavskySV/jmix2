@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.11.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="sp">
+        <addColumn tableName="SP_SPACEPORT">
+            <column name="COORDINATES_ID" type="UUID"/>
+        </addColumn>
+
+        <addNotNullConstraint columnName="COORDINATES_ID" tableName="SP_SPACEPORT"/>
+    </changeSet>
+    <changeSet id="2" author="sp">
+        <addColumn tableName="SP_SPACEPORT">
+            <column name="COORDINATES_LATTITUDE" type="DOUBLE"/>
+            <column name="COORDINATES_LONGITUDE" type="DOUBLE"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

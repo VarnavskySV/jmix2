@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.11.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="sp">
+        <addColumn tableName="SP_WAYBILL_ITEM">
+            <column name="DIM_WIGHT" type="DOUBLE"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="2" author="sp">
+        <dropColumn columnName="wight" tableName="sp_waybill_item"/>
+    </changeSet>
+</databaseChangeLog>

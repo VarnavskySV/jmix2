@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.11.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="sp">
+        <createTable tableName="SP_COMPANY">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_SP_COMPANY"/>
+            </column>
+            <column name="REGISTRATION_ID" type="VARCHAR(100)"/>
+            <column name="COMPANY_TYPE" type="VARCHAR(100)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="2" author="sp">
+        <createTable tableName="SP_INDIVIDUAL">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_SP_INDIVIDUAL"/>
+            </column>
+            <column name="FIRST_NAME" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LAST_NAME" type="VARCHAR(100)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="3" author="sp">
+        <addForeignKeyConstraint baseColumnNames="ID" baseTableName="SP_COMPANY" constraintName="FK_SP_COMPANY_ON_ID"
+                                 referencedColumnNames="ID" referencedTableName="SP_CUSTOMER"/>
+    </changeSet>
+    <changeSet id="4" author="sp">
+        <addForeignKeyConstraint baseColumnNames="ID" baseTableName="SP_INDIVIDUAL"
+                                 constraintName="FK_SP_INDIVIDUAL_ON_ID" referencedColumnNames="ID"
+                                 referencedTableName="SP_CUSTOMER"/>
+    </changeSet>
+    <changeSet id="5" author="sp">
+        <dropColumn columnName="company_type" tableName="sp_customer"/>
+
+        <dropColumn columnName="first_name" tableName="sp_customer"/>
+
+        <dropColumn columnName="last_name" tableName="sp_customer"/>
+
+        <dropColumn columnName="registration_id" tableName="sp_customer"/>
+    </changeSet>
+</databaseChangeLog>

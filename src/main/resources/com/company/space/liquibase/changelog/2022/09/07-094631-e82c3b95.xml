@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.11.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="sp">
+        <createTable tableName="SP_ATMOSPHERE">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_SP_ATMOSPHERE"/>
+            </column>
+            <column name="DESCRIPTION" type="CLOB"/>
+            <column name="PRESSURE" type="DOUBLE"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="2" author="sp">
+        <createTable tableName="SP_ATMOSPHERIC_GAS">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_SP_ATMOSPHERIC_GAS"/>
+            </column>
+            <column name="GAS_ID" type="UUID"/>
+            <column name="VOLUME" type="DOUBLE"/>
+            <column name="ATMOSPHERE_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="3" author="sp">
+        <createTable tableName="SP_CARRIER">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_SP_CARRIER"/>
+            </column>
+            <column name="NAME" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="4" author="sp">
+        <createTable tableName="SP_CARRIER_SPACEPORT_LINK">
+            <column name="CARRIER_ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_SP_CARRIER_SPACEPORT_LINK"/>
+            </column>
+            <column name="SPACEPORT_ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_SP_CARRIER_SPACEPORT_LINK"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="5" author="sp">
+        <createTable tableName="SP_CUSTOMER">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_SP_CUSTOMER"/>
+            </column>
+            <column name="DTYPE" type="VARCHAR(31)"/>
+            <column name="NAME" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="EMAIL" type="VARCHAR(150)"/>
+            <column name="GRADE" type="INT"/>
+            <column name="FIRST_NAME" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LAST_NAME" type="VARCHAR(100)"/>
+            <column name="REGISTRATION_ID" type="VARCHAR(100)"/>
+            <column name="COMPANY_TYPE" type="VARCHAR(100)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="6" author="sp">
+        <createTable tableName="SP_DISCOUNTS">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_SP_DISCOUNTS"/>
+            </column>
+            <column name="GRADE" type="INT"/>
+            <column name="VALUE_" type="DECIMAL(19, 2)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="7" author="sp">
+        <createTable tableName="SP_GAS">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_SP_GAS"/>
+            </column>
+            <column name="NAME" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="8" author="sp">
+        <createTable tableName="SP_MOON">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_SP_MOON"/>
+            </column>
+            <column name="NAME" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MASS" type="DOUBLE"/>
+            <column name="PICTURE" type="VARCHAR(1024)"/>
+            <column name="ATMOSPHERE_ID" type="UUID"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="9" author="sp">
+        <createTable tableName="SP_PLANET">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_SP_PLANET"/>
+            </column>
+            <column name="SEMI_MAJOR_AXIS" type="DOUBLE"/>
+            <column name="ORBITAL_PERIOD" type="DOUBLE"/>
+            <column name="ROTATION_PERIOD" type="DOUBLE"/>
+            <column name="ATMOSPHERE_ID" type="UUID"/>
+            <column name="RINGS" type="BOOLEAN"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="10" author="sp">
+        <createTable tableName="SP_SPACEPORT">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_SP_SPACEPORT"/>
+            </column>
+            <column name="NAME" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PLANET_ID" type="UUID"/>
+            <column name="MOON_ID" type="UUID"/>
+            <column name="IS_DEFAULT" type="BOOLEAN"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="11" author="sp">
+        <createTable tableName="SP_WAYBILL">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_SP_WAYBILL"/>
+            </column>
+            <column name="REFERENCE" type="VARCHAR(150)"/>
+            <column name="CREATOR_ID" type="UUID"/>
+            <column name="SHIPPER_ID" type="UUID"/>
+            <column name="CONSIGNEE_ID" type="UUID"/>
+            <column name="DEPARTURE_PORT_ID" type="UUID"/>
+            <column name="DESTINATION_PORT_ID" type="UUID"/>
+            <column name="CARRIER_ID" type="UUID"/>
+            <column name="TOTAL_WEIGHT" type="DOUBLE"/>
+            <column name="TOTAL_CHARGE" type="DECIMAL(19, 2)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="12" author="sp">
+        <createTable tableName="SP_WAYBILL_ITEM">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_SP_WAYBILL_ITEM"/>
+            </column>
+            <column name="NUMBER_" type="INT"/>
+            <column name="NAME" type="VARCHAR(150)"/>
+            <column name="WEIGHT" type="DOUBLE"/>
+            <column name="CHARGE" type="DECIMAL(19, 2)"/>
+            <column name="WAYBILL_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DIM_ID" type="UUID"/>
+            <column name="DIM_LENGTH" type="DOUBLE"/>
+            <column name="DIM_WEIGHT" type="DOUBLE"/>
+            <column name="DIM_HEIGHT" type="DOUBLE"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="13" author="sp">
+        <createIndex indexName="IDX_SPATMOSPHERICGA_ATMOSPHERE" tableName="SP_ATMOSPHERIC_GAS">
+            <column name="ATMOSPHERE_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="ATMOSPHERE_ID" baseTableName="SP_ATMOSPHERIC_GAS"
+                                 constraintName="FK_SPATMOSPHERIC_ON_ATMOSPHERE" referencedColumnNames="ID"
+                                 referencedTableName="SP_ATMOSPHERE"/>
+    </changeSet>
+    <changeSet id="14" author="sp">
+        <createIndex indexName="IDX_SPWAYBILL_DESTINATIONPORT" tableName="SP_WAYBILL">
+            <column name="DESTINATION_PORT_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="DESTINATION_PORT_ID" baseTableName="SP_WAYBILL"
+                                 constraintName="FK_SPWAYBILL_ON_DESTINATIONPOR" referencedColumnNames="ID"
+                                 referencedTableName="SP_SPACEPORT"/>
+    </changeSet>
+    <changeSet id="15" author="sp">
+        <createIndex indexName="IDX_SP_ATMOSPHERIC_GAS_GAS" tableName="SP_ATMOSPHERIC_GAS">
+            <column name="GAS_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="GAS_ID" baseTableName="SP_ATMOSPHERIC_GAS"
+                                 constraintName="FK_SP_ATMOSPHERIC_GAS_ON_GAS" referencedColumnNames="ID"
+                                 referencedTableName="SP_GAS"/>
+    </changeSet>
+    <changeSet id="16" author="sp">
+        <createIndex indexName="IDX_SP_MOON_ATMOSPHERE" tableName="SP_MOON">
+            <column name="ATMOSPHERE_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="ATMOSPHERE_ID" baseTableName="SP_MOON"
+                                 constraintName="FK_SP_MOON_ON_ATMOSPHERE" referencedColumnNames="ID"
+                                 referencedTableName="SP_ATMOSPHERE"/>
+    </changeSet>
+    <changeSet id="17" author="sp">
+        <createIndex indexName="IDX_SP_PLANET_ATMOSPHERE" tableName="SP_PLANET">
+            <column name="ATMOSPHERE_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="ATMOSPHERE_ID" baseTableName="SP_PLANET"
+                                 constraintName="FK_SP_PLANET_ON_ATMOSPHERE" referencedColumnNames="ID"
+                                 referencedTableName="SP_ATMOSPHERE"/>
+    </changeSet>
+    <changeSet id="18" author="sp">
+        <createIndex indexName="IDX_SP_SPACEPORT_MOON" tableName="SP_SPACEPORT">
+            <column name="MOON_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="MOON_ID" baseTableName="SP_SPACEPORT"
+                                 constraintName="FK_SP_SPACEPORT_ON_MOON" referencedColumnNames="ID"
+                                 referencedTableName="SP_MOON"/>
+    </changeSet>
+    <changeSet id="19" author="sp">
+        <createIndex indexName="IDX_SP_SPACEPORT_PLANET" tableName="SP_SPACEPORT">
+            <column name="PLANET_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="PLANET_ID" baseTableName="SP_SPACEPORT"
+                                 constraintName="FK_SP_SPACEPORT_ON_PLANET" referencedColumnNames="ID"
+                                 referencedTableName="SP_PLANET"/>
+    </changeSet>
+    <changeSet id="20" author="sp">
+        <createIndex indexName="IDX_SP_WAYBILL_CARRIER" tableName="SP_WAYBILL">
+            <column name="CARRIER_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="CARRIER_ID" baseTableName="SP_WAYBILL"
+                                 constraintName="FK_SP_WAYBILL_ON_CARRIER" referencedColumnNames="ID"
+                                 referencedTableName="SP_CARRIER"/>
+    </changeSet>
+    <changeSet id="21" author="sp">
+        <createIndex indexName="IDX_SP_WAYBILL_CONSIGNEE" tableName="SP_WAYBILL">
+            <column name="CONSIGNEE_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="CONSIGNEE_ID" baseTableName="SP_WAYBILL"
+                                 constraintName="FK_SP_WAYBILL_ON_CONSIGNEE" referencedColumnNames="ID"
+                                 referencedTableName="SP_CUSTOMER"/>
+    </changeSet>
+    <changeSet id="22" author="sp">
+        <createIndex indexName="IDX_SP_WAYBILL_CREATOR" tableName="SP_WAYBILL">
+            <column name="CREATOR_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="CREATOR_ID" baseTableName="SP_WAYBILL"
+                                 constraintName="FK_SP_WAYBILL_ON_CREATOR" referencedColumnNames="ID"
+                                 referencedTableName="SP_USER"/>
+    </changeSet>
+    <changeSet id="23" author="sp">
+        <createIndex indexName="IDX_SP_WAYBILL_CUSTOMER" tableName="SP_WAYBILL">
+            <column name="SHIPPER_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="SHIPPER_ID" baseTableName="SP_WAYBILL"
+                                 constraintName="FK_SP_WAYBILL_ON_SHIPPER" referencedColumnNames="ID"
+                                 referencedTableName="SP_CUSTOMER"/>
+    </changeSet>
+    <changeSet id="24" author="sp">
+        <createIndex indexName="IDX_SP_WAYBILL_DEPARTURE_PORT" tableName="SP_WAYBILL">
+            <column name="DEPARTURE_PORT_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="DEPARTURE_PORT_ID" baseTableName="SP_WAYBILL"
+                                 constraintName="FK_SPWAYBILL_ON_DEPARTUREPORT" referencedColumnNames="ID"
+                                 referencedTableName="SP_SPACEPORT"/>
+    </changeSet>
+    <changeSet id="25" author="sp">
+        <createIndex indexName="IDX_SP_WAYBILL_ITEM_WAYBILL" tableName="SP_WAYBILL_ITEM">
+            <column name="WAYBILL_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="WAYBILL_ID" baseTableName="SP_WAYBILL_ITEM"
+                                 constraintName="FK_SP_WAYBILL_ITEM_ON_WAYBILL" referencedColumnNames="ID"
+                                 referencedTableName="SP_WAYBILL"/>
+    </changeSet>
+    <changeSet id="26" author="sp">
+        <addForeignKeyConstraint baseColumnNames="CARRIER_ID" baseTableName="SP_CARRIER_SPACEPORT_LINK"
+                                 constraintName="FK_SPCARSPA_ON_CARRIER" referencedColumnNames="ID"
+                                 referencedTableName="SP_CARRIER"/>
+    </changeSet>
+    <changeSet id="27" author="sp">
+        <addForeignKeyConstraint baseColumnNames="SPACEPORT_ID" baseTableName="SP_CARRIER_SPACEPORT_LINK"
+                                 constraintName="FK_SPCARSPA_ON_SPACEPORT" referencedColumnNames="ID"
+                                 referencedTableName="SP_SPACEPORT"/>
+    </changeSet>
+</databaseChangeLog>
