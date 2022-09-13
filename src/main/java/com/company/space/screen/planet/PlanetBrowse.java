@@ -44,6 +44,9 @@ public class PlanetBrowse extends StandardLookup<Planet> {
         File file = temporaryStorage.getFile(fileId);
 
         List<String> planets = FileUtils.readLines(file, StandardCharsets.UTF_8);
+
+        file.delete();
+
         String planetName = "";
         Double planetMass = 0.0;
         Double planetSemi = 0.0;

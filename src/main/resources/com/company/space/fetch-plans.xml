@@ -1,0 +1,5 @@
+<fetchPlans xmlns="http://jmix.io/schema/core/fetch-plans">
+    <fetchPlan name="load-waybill" extends="_base" class="com.company.space.entity.Waybill">
+        <property name="items" fetchPlan="_base"/>
+    </fetchPlan>
+</fetchPlans>

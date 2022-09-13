@@ -50,8 +50,10 @@ public class WaybillItemEdit extends StandardEditor<WaybillItem> {
     }
 
     private void calcChargeField(){
+
         waybillItemService.calcChargeField(waybillItemDc.getItem());
         chargeField.setValue(waybillItemDc.getItem().getCharge());
+
     }
     @Subscribe
     public void onInitEntity(InitEntityEvent<WaybillItem> event) {

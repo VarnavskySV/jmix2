@@ -32,6 +32,7 @@ public class AtmosphericGas {
 
     @Column(name = "VOLUME")
     private Double volume;
+
     @JoinColumn(name = "ATMOSPHERE_ID", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Atmosphere atmosphere;

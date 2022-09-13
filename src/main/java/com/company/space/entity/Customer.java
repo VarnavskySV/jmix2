@@ -9,6 +9,7 @@ import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.PostLoad;
@@ -18,7 +19,9 @@ import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @JmixEntity
-@Table(name = "SP_CUSTOMER")
+@Table(name = "SP_CUSTOMER", indexes = {
+        @Index(name = "IDX_SP_CUSTOMER_UNQ", columnList = "NAME", unique = true)
+})
 @Entity(name = "sp_Customer")
 @DiscriminatorColumn(name = "DTYPE", discriminatorType = DiscriminatorType.STRING)
 @Inheritance(strategy = InheritanceType.JOINED)

@@ -1,7 +1,7 @@
 Name,"Equatorial diameter",Mass,Semi-major axis (AU),"Orbital period (years)","Inclination to the ecliptic (°)","Orbital eccentricity","Rotation period (days)","Confirmed moons",Axial tilt,Rings,Atmosphere
 Mercury,0.383,0.06,0.39,0.24,7.00,0.206,58.65,0,0.04,no,minimal
 Venus,0.949,0.81,0.72,0.62,3.39,0.007,243.02,0,177.30,no,"CO2, N2"
-Earth‡,1.000,1.00,1.00,1.00,0.0,0.017,1.00,1,23.44,no,"N2, O2, Ar"
+Earth,1.000,1.00,1.00,1.00,0.0,0.017,1.00,1,23.44,no,"N2, O2, Ar"
 Mars,0.532,0.11,1.52,1.88,1.85,0.093,01.03,2,25.19,no,"CO2, N2, Ar"
 Jupiter,11.209,317.83,5.20,11.86,1.30,0.048,0.41,80,3.13,yes,"H2, He"
 Saturn,9.449,95.16,9.54,29.45,2.49,0.054,0.44,83,26.73,yes,"H2, He"

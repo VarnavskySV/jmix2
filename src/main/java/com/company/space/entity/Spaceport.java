@@ -25,7 +25,8 @@ import java.util.UUID;
 @JmixEntity
 @Table(name = "SP_SPACEPORT", indexes = {
         @Index(name = "IDX_SP_SPACEPORT_PLANET", columnList = "PLANET_ID"),
-        @Index(name = "IDX_SP_SPACEPORT_MOON", columnList = "MOON_ID")
+        @Index(name = "IDX_SP_SPACEPORT_MOON", columnList = "MOON_ID"),
+        @Index(name = "IDX_SP_SPACEPORT_UNQ", columnList = "NAME", unique = true)
 })
 @Entity(name = "sp_Spaceport")
 public class Spaceport {

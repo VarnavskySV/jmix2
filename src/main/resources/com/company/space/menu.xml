@@ -12,6 +12,10 @@
         <item screen="sp_Waybill.browse" caption="msg://com.company.space.screen.waybill/waybillBrowse.menu"/>
         <item screen="sp_Carrier.browse" caption="msg://com.company.space.screen.carrier/carrierBrowse.menu"/>
         <item screen="sp_Discounts.browse" caption="msg://com.company.space.screen.discounts/discountsBrowse.menu"/>
+        <item screen="sp_Atmosphere.browse" caption="msg://com.company.space.screen.atmosphere/atmosphereBrowse.menu"/>
+        <item screen="sp_Gas.browse" caption="msg://com.company.space.screen.gas/gasBrowse.menu"/>
+        <item screen="sp_AtmosphericGas.browse"
+              caption="msg://com.company.space.screen.atmosphericgas/atmosphericGasBrowse.menu"/>
     </menu>
 
 </menu-config>

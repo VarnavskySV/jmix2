@@ -17,6 +17,7 @@ import io.jmix.ui.component.EntityPicker;
 import io.jmix.ui.component.HasValue;
 import io.jmix.ui.component.RadioButtonGroup;
 import io.jmix.ui.component.TextField;
+import io.jmix.ui.model.CollectionChangeType;
 import io.jmix.ui.model.CollectionContainer;
 import io.jmix.ui.model.CollectionPropertyContainer;
 import io.jmix.ui.model.InstanceContainer;
@@ -32,7 +33,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicReference;
 
 @UiController("sp_Waybill.edit")
 @UiDescriptor("waybill-edit.xml")
@@ -150,11 +150,11 @@ public class WaybillEdit extends StandardEditor<Waybill> {
 
     private void setConsigneeVisible(Waybill waybill){
 
-        Integer idx = 0;
+        int idx = 0;
 
         if (waybill != null && waybill.getConsignee() != null){
 
-            Customer customer = (Customer) waybill.getConsignee();
+            Customer customer = waybill.getConsignee();
 
             if (customer.getClass() == Individual.class){
 
@@ -168,12 +168,12 @@ public class WaybillEdit extends StandardEditor<Waybill> {
     }
     private void setShipperVisible(Waybill waybill){
 
-        Integer idx = 0;
+        int idx = 0;
 
 
         if (waybill != null && waybill.getShipper() != null){
 
-            Customer customer = (Customer) waybill.getShipper();
+            Customer customer = waybill.getShipper();
 
             if (customer.getClass() == Individual.class){
 
@@ -219,32 +219,43 @@ public class WaybillEdit extends StandardEditor<Waybill> {
     @Subscribe("itemsTable.up")
     public void onItemsTableUp(Action.ActionPerformedEvent event) {
 
-        waybillItemListener.swapNumber(itemsDc.getItem(), 1);
-
-        waybillDl.load();
+        this.swapNumber( 1);
 
     }
 
     @Subscribe("itemsTable.down")
     public void onItemsTableDown(Action.ActionPerformedEvent event) {
 
-        waybillItemListener.swapNumber(itemsDc.getItem(), -1);
+        this.swapNumber( -1);
 
-        waybillDl.load();
+    }
+
+    @Subscribe(id = "itemsDc", target = Target.DATA_CONTAINER)
+    public void onItemsDcCollectionChange(CollectionContainer.CollectionChangeEvent<WaybillItem> event) {
+
+        if (event.getChangeType() == CollectionChangeType.REMOVE_ITEMS){
+
+            CollectionContainer<WaybillItem> source = event.getSource();
+            List<WaybillItem> items = source.getMutableItems();
+
+            waybillItemService.recalcNumber(items);
+            items.forEach(source::replaceItem);
+
+        }
 
     }
 
     @Install(to = "itemsTable.edit", subject = "afterCommitHandler")
     private void itemsTableEditAfterCommitHandler(WaybillItem waybillItem) {
 
-        recalcTotalField(waybillItem, 1);
+        calcTotalField(waybillItem, 1);
 
     }
 
     @Install(to = "itemsTable.create", subject = "afterCommitHandler")
     private void itemsTableCreateAfterCommitHandler(WaybillItem waybillItem) {
 
-        recalcTotalField(waybillItem, 1);
+        calcTotalField(waybillItem, 1);
 
     }
 
@@ -252,26 +263,30 @@ public class WaybillEdit extends StandardEditor<Waybill> {
     @Install(to = "itemsTable.remove", subject = "afterActionPerformedHandler")
     private void itemsTableRemoveAfterActionPerformedHandler(RemoveOperation.AfterActionPerformedEvent<WaybillItem> afterActionPerformedEvent) {
 
-        //waybillItemListener.recalcNumber(itemsDc.getItems());
-        afterActionPerformedEvent.getItems().stream()
-                .forEach(item->{
-                    recalcTotalField(item, -1);
-                });
+        afterActionPerformedEvent.getItems()
+                .forEach(item-> calcTotalField(item, -1));
 
     }
 
 
-    private void recalcTotalField(WaybillItem waybillItem, int direction){
+    private void calcTotalField(WaybillItem waybillItem, int direction){
 
         List<WaybillItem> items = itemsDc.getItems();
         Waybill waybill = waybillItem.getWaybill();
 
-        waybillItemListener.calculateTotalWeightFields(waybill, items, direction);
+        waybillItemService.calculateTotalWeightFields(waybill, items, direction);
         totalWeightField.setValue(waybill.getTotalWeight());
 
-        waybillItemListener.calculateTotalChargeFields(waybillDc.getItem(), items);
+        waybillItemService.calculateTotalChargeFields(waybillDc.getItem(), items);
         totalChargeField.setValue(waybillDc.getItem().getTotalCharge());
 
     }
+    private void swapNumber(int direction){
 
+        List<WaybillItem> waybillItems = waybillItemService.swapNumber(itemsDc.getMutableItems(),
+                                                    itemsDc.getItem(), direction);
+
+        waybillItems.forEach(item-> itemsDc.replaceItem(item));
+
+    }
 }

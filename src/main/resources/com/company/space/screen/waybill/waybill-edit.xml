@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://jmix.io/schema/ui/window"
-        xmlns:c="http://jmix.io/schema/ui/jpql-condition"
         caption="msg://waybillEdit.caption"
         focusComponent="form">
     <data>
@@ -13,8 +12,6 @@
                 <property name="destinationPort" fetchPlan="_base"/>
                 <property name="carrier" fetchPlan="_base"/>
                 <property name="items" fetchPlan="_base"/>
-                <property name="totalWeight"/>
-                <property name="totalCharge"/>
             </fetchPlan>
             <loader id="waybillDl"/>
             <collection id="itemsDc" property="items"/>
@@ -37,12 +34,18 @@
             </loader>
         </collection>
         <collection id="individualDc" class="com.company.space.entity.Customer">
-            <fetchPlan extends="_local">
-                <property name="name"/>
-            </fetchPlan>
+            <fetchPlan extends="_local"/>
             <loader id="individualDl">
                 <query>
                     <![CDATA[select e from sp_Individual e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="planetDc" class="com.company.space.entity.Planet">
+            <fetchPlan extends="_instance_name"/>
+            <loader id="planetDl">
+                <query>
+                    <![CDATA[select p from sp_Planet p]]>
                 </query>
             </loader>
         </collection>
@@ -64,23 +67,29 @@
                 width="800"/>
     <layout spacing="true" expand="editActions">
         <form id="form" dataContainer="waybillDc">
-            <column width="350px">
+            <column width="550px">
                 <textField id="referenceField" property="reference"/>
-                <radioButtonGroup id="shipperRadioField" caption="msg://shipperRadioField1.caption"/>
-                <entityComboBox id="shipperField" property="shipper"/>
-                <radioButtonGroup id="consigneeRadioField" caption="msg://consigneeRadioField.caption"/>
-                <entityPicker id="consigneeField" property="consignee">
+                <hbox id="shipperHBoxField" spacing="true" caption="msg://shipperHBoxField.caption">
+                    <radioButtonGroup id="shipperRadioField" align="MIDDLE_LEFT"/>
+                    <entityComboBox id="shipperField" property="shipper" dataContainer="waybillDc"
+                                    align="MIDDLE_RIGHT"/>
+                </hbox>
+                <hbox id="consigneeGBoxField" spacing="true" caption="msg://consigneeGBoxField.caption">
+                <radioButtonGroup id="consigneeRadioField" align="MIDDLE_LEFT"/>
+                <entityPicker id="consigneeField" property="consignee" dataContainer="waybillDc" align="MIDDLE_LEFT">
                     <actions>
-                        <action id="entityLookup" type="entity_lookup"></action>
+                        <action id="entityLookup" type="entity_lookup"/>
                         <action id="entityClear" type="entity_clear"/>
                     </actions>
                 </entityPicker>
+                </hbox>
                 <entityPicker id="departurePortField" property="departurePort">
                     <actions>
                         <action id="entityLookup" type="entity_lookup"/>
                         <action id="entityClear" type="entity_clear"/>
                     </actions>
                 </entityPicker>
+                <entityComboBox id="departurePlanetField" optionsContainer="planetDc"/>
                 <entityPicker id="destinationPortField" property="destinationPort">
                     <actions>
                         <action id="entityLookup" type="entity_lookup"/>

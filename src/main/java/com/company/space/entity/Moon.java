@@ -12,7 +12,8 @@ import javax.persistence.Table;
 
 @JmixEntity
 @Table(name = "SP_MOON", indexes = {
-        @Index(name = "IDX_SP_MOON_ATMOSPHERE", columnList = "ATMOSPHERE_ID")
+        @Index(name = "IDX_SP_MOON_ATMOSPHERE", columnList = "ATMOSPHERE_ID"),
+        @Index(name = "IDX_SP_MOON_UNQ", columnList = "NAME", unique = true)
 })
 @Entity(name = "sp_Moon")
 public class Moon extends AstronomicalBody {
