@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://jmix.io/schema/ui/window"
-        caption="msg://waybillItemEdit.caption"
+        caption="msg://gasEdit.caption"
         focusComponent="form">
     <data>
-        <instance id="waybillItemDc"
-                  class="com.company.space.entity.WaybillItem">
-            <fetchPlan extends="_base">
-                <property name="dim" fetchPlan="_base"/>
-            </fetchPlan>
+        <instance id="gasDc"
+                  class="com.company.space.entity.Gas">
+            <fetchPlan extends="_base"/>
             <loader/>
         </instance>
     </data>
@@ -27,15 +25,9 @@
     <dialogMode height="600"
                 width="800"/>
     <layout spacing="true" expand="editActions">
-        <form id="form" dataContainer="waybillItemDc">
+        <form id="form" dataContainer="gasDc">
             <column width="350px">
-                <textField id="numberField" property="number" editable="false"/>
                 <textField id="nameField" property="name"/>
-                <textField id="weightField" property="weight"/>
-                <textField id="dimLengthField" property="dim.length"/>
-                <textField id="dimWightField" property="dim.wight" caption="msg://dimWightField.caption"/>
-                <textField id="dimHeightField" property="dim.height"/>
-                <textField id="chargeField" property="charge" editable="false"/>
             </column>
         </form>
         <hbox id="editActions" spacing="true">

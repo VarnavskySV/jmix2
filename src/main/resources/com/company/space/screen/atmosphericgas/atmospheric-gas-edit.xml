@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://jmix.io/schema/ui/window"
-        caption="msg://waybillItemEdit.caption"
+        caption="msg://atmosphericGasEdit.caption"
         focusComponent="form">
     <data>
-        <instance id="waybillItemDc"
-                  class="com.company.space.entity.WaybillItem">
+        <instance id="atmosphericGasDc"
+                  class="com.company.space.entity.AtmosphericGas">
             <fetchPlan extends="_base">
-                <property name="dim" fetchPlan="_base"/>
+                <property name="gas" fetchPlan="_base"/>
             </fetchPlan>
             <loader/>
         </instance>
@@ -27,15 +27,15 @@
     <dialogMode height="600"
                 width="800"/>
     <layout spacing="true" expand="editActions">
-        <form id="form" dataContainer="waybillItemDc">
+        <form id="form" dataContainer="atmosphericGasDc">
             <column width="350px">
-                <textField id="numberField" property="number" editable="false"/>
-                <textField id="nameField" property="name"/>
-                <textField id="weightField" property="weight"/>
-                <textField id="dimLengthField" property="dim.length"/>
-                <textField id="dimWightField" property="dim.wight" caption="msg://dimWightField.caption"/>
-                <textField id="dimHeightField" property="dim.height"/>
-                <textField id="chargeField" property="charge" editable="false"/>
+                <entityPicker id="gasField" property="gas">
+                    <actions>
+                        <action id="entityLookup" type="entity_lookup"/>
+                        <action id="entityClear" type="entity_clear"/>
+                    </actions>
+                </entityPicker>
+                <textField id="volumeField" property="volume"/>
             </column>
         </form>
         <hbox id="editActions" spacing="true">

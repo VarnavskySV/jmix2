@@ -1,12 +1,15 @@
 package com.company.space.screen.waybillitem;
 
 import com.company.space.app.services.WaybillItemService;
-import io.jmix.core.DataManager;
+import com.company.space.entity.WaybillItem;
 import io.jmix.ui.component.HasValue;
 import io.jmix.ui.component.TextField;
 import io.jmix.ui.model.InstanceContainer;
-import io.jmix.ui.screen.*;
-import com.company.space.entity.WaybillItem;
+import io.jmix.ui.screen.EditedEntityContainer;
+import io.jmix.ui.screen.StandardEditor;
+import io.jmix.ui.screen.Subscribe;
+import io.jmix.ui.screen.UiController;
+import io.jmix.ui.screen.UiDescriptor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
@@ -15,9 +18,6 @@ import java.math.BigDecimal;
 @UiDescriptor("waybill-item-edit.xml")
 @EditedEntityContainer("waybillItemDc")
 public class WaybillItemEdit extends StandardEditor<WaybillItem> {
-
-    @Autowired
-    DataManager dataManager;
 
     @Autowired
     WaybillItemService waybillItemService;
@@ -50,8 +50,10 @@ public class WaybillItemEdit extends StandardEditor<WaybillItem> {
     }
 
     private void calcChargeField(){
+
         waybillItemService.calcChargeField(waybillItemDc.getItem());
         chargeField.setValue(waybillItemDc.getItem().getCharge());
+
     }
     @Subscribe
     public void onInitEntity(InitEntityEvent<WaybillItem> event) {

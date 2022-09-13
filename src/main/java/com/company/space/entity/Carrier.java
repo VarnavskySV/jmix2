@@ -7,6 +7,7 @@ import io.jmix.core.metamodel.annotation.JmixEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -16,7 +17,9 @@ import java.util.List;
 import java.util.UUID;
 
 @JmixEntity
-@Table(name = "SP_CARRIER")
+@Table(name = "SP_CARRIER", indexes = {
+        @Index(name = "IDX_SP_CARRIER_UNQ", columnList = "NAME", unique = true)
+})
 @Entity(name = "sp_Carrier")
 public class Carrier {
     @JmixGeneratedValue
