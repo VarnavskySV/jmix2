@@ -49,6 +49,9 @@
                 </query>
             </loader>
         </collection>
+        <collection id="astronomicalBodyDc" class="com.company.space.entity.AstronomicalBody">
+            <loader id="astronomicalBodyDl"/>
+        </collection>
     </data>
     <facets>
         <dataLoadCoordinator auto="true"/>
@@ -83,19 +86,24 @@
                     </actions>
                 </entityPicker>
                 </hbox>
-                <entityPicker id="departurePortField" property="departurePort">
-                    <actions>
-                        <action id="entityLookup" type="entity_lookup"/>
-                        <action id="entityClear" type="entity_clear"/>
-                    </actions>
-                </entityPicker>
-                <entityComboBox id="departurePlanetField" optionsContainer="planetDc"/>
-                <entityPicker id="destinationPortField" property="destinationPort">
-                    <actions>
-                        <action id="entityLookup" type="entity_lookup"/>
-                        <action id="entityClear" type="entity_clear"/>
-                    </actions>
-                </entityPicker>
+                <hbox id="departureHBoxField" spacing="true" caption="msg://departureHBoxField.caption">
+                    <entityComboBox id="departurePlanetField" optionsContainer="astronomicalBodyDc"/>
+                    <entityPicker id="departurePortField" property="departurePort" dataContainer="waybillDc">
+                        <actions>
+                            <action id="entityLookup" type="entity_lookup"/>
+                            <action id="entityClear" type="entity_clear"/>
+                        </actions>
+                    </entityPicker>
+                </hbox>
+                <hbox id="destinationHBoxField" spacing="true" caption="msg://destinationHBoxField.caption">
+                    <entityComboBox id="destinationPlanetField" optionsContainer="astronomicalBodyDc"/>
+                    <entityPicker id="destinationPortField" property="destinationPort" dataContainer="waybillDc">
+                        <actions>
+                            <action id="entityLookup" type="entity_lookup"/>
+                            <action id="entityClear" type="entity_clear"/>
+                        </actions>
+                    </entityPicker>
+                </hbox>
                 <entityPicker id="carrierField" property="carrier">
                     <actions>
                         <action id="entityLookup" type="entity_lookup"/>

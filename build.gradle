@@ -1,6 +1,8 @@
 plugins {
     id 'io.jmix' version '1.3.0'
     id 'java'
+    id 'com.palantir.docker' version '0.30.0'
+
 }
 
 apply plugin: 'org.springframework.boot'
@@ -46,6 +48,12 @@ dependencies {
     implementation 'org.hsqldb:hsqldb'
 }
 
+docker {
+    dependsOn(tasks.bootJar)
+    name "$rootProject.name:$version"
+    dockerfile file('docker/Dockerfile')
+    files tasks.bootJar.outputs
+}
 test {
     useJUnitPlatform()
 }

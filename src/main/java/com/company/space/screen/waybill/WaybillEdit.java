@@ -1,12 +1,16 @@
 package com.company.space.screen.waybill;
 
+import com.company.space.app.services.SpaceportService;
 import com.company.space.app.services.WaybillItemService;
+import com.company.space.entity.AstronomicalBody;
 import com.company.space.entity.Carrier;
 import com.company.space.entity.Customer;
 import com.company.space.entity.Individual;
+import com.company.space.entity.Spaceport;
 import com.company.space.entity.Waybill;
 import com.company.space.entity.WaybillItem;
 import com.company.space.screen.carrier.CarrierBrowse;
+import io.jmix.core.LoadContext;
 import io.jmix.ui.RemoveOperation;
 import io.jmix.ui.ScreenBuilders;
 import io.jmix.ui.action.Action;
@@ -82,6 +86,16 @@ public class WaybillEdit extends StandardEditor<Waybill> {
 
     @Autowired
     WaybillItemService waybillItemService;
+
+    @Autowired
+    SpaceportService spaceportService;
+
+
+    @Autowired
+    private EntityPicker<Spaceport> departurePortField;
+
+    @Autowired
+    private EntityPicker<Spaceport> destinationPortField;
 
     @Subscribe(id = "waybillDc", target = Target.DATA_CONTAINER)
     public void onWaybillDcItemChange(InstanceContainer.ItemChangeEvent<Waybill> event) {
@@ -234,7 +248,7 @@ public class WaybillEdit extends StandardEditor<Waybill> {
             CollectionContainer<WaybillItem> source = event.getSource();
             List<WaybillItem> items = source.getMutableItems();
 
-            waybillItemService.recalcNumber(items);
+            waybillItemService.calcNumber(items);
             items.forEach(source::replaceItem);
 
         }
@@ -285,4 +299,51 @@ public class WaybillEdit extends StandardEditor<Waybill> {
         waybillItems.forEach(item-> itemsDc.replaceItem(item));
 
     }
+
+    @Install(to = "astronomicalBodyDl", target = Target.DATA_LOADER)
+    private List<AstronomicalBody> astronomicalBodyDlLoadDelegate(LoadContext<AstronomicalBody> loadContext) {
+        return spaceportService.getAstronomicalBody();
+    }
+
+    @Subscribe("departurePlanetField")
+    public void onDeparturePlanetFieldValueChange(HasValue.ValueChangeEvent<AstronomicalBody> event) {
+
+        // Поищем порт с планетой отправления по умолчанию и подставим в поле отправитель.
+
+       AstronomicalBody astronomicalBody = event.getValue();
+
+        Spaceport spaceport = spaceportService.getDefaultPort(astronomicalBody);
+
+        if (spaceport != null){
+
+            departurePortField.setValue(spaceport);
+
+        } else {
+
+            departurePortField.clear();
+
+        }
+
+    }
+
+    @Subscribe("destinationPlanetField")
+    public void onDestinationPlanetFieldValueChange(HasValue.ValueChangeEvent<AstronomicalBody> event) {
+
+        // Поищем порт с планетой назначения по умолчанию и подставим в поле получатель.
+
+        AstronomicalBody astronomicalBody = event.getValue();
+
+        Spaceport spaceport = spaceportService.getDefaultPort(astronomicalBody);
+
+        if (spaceport != null){
+
+            destinationPortField.setValue(spaceport);
+
+        } else {
+            destinationPortField.clear();
+        }
+
+    }
+
+
 }

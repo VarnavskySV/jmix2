@@ -79,7 +79,7 @@ public class WaybillItemService {
         return List.of(waybillItem, swapItem);
 
     }
-    public void recalcNumber(List<WaybillItem> waybillItems){
+    public void calcNumber(List<WaybillItem> waybillItems){
 
         List<WaybillItem> sorted = waybillItems.stream()
                 .sorted(Comparator.comparing(WaybillItem::getNumber))
@@ -96,10 +96,10 @@ public class WaybillItemService {
     public void calculateTotalWeightFields(Waybill waybill, List<WaybillItem> waybillItems, int direction) {
 
 
-        Double weigth = waybillItems.stream()
+        Double weight = waybillItems.stream()
                 .mapToDouble(item -> item.getWeight() == null ? 0 : item.getWeight()).sum();
 
-        waybill.setTotalWeight(weigth);
+        waybill.setTotalWeight(weight);
 
     }
 
